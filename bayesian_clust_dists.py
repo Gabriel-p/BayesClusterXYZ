@@ -6,6 +6,10 @@ import astropy.units as u
 import astropy.coordinates as coord
 
 
+# Name of file to read from the 'input/' folder
+file_name = "ngc2516_pang.dat"
+
+
 def main(
     ra_c='RA_ICRS', de_c='DE_ICRS', plx_c='Plx', dmin=300, dmax=500,
         w_field=.5, w_cluster=.95, nruns=5000, nwalkers=10, ndim=1):
@@ -24,12 +28,12 @@ def main(
     """
 
     # Load data for NGC2516
-    data = ascii.read('input/ngc2516_pang.dat')
+    data = ascii.read('input/' + file_name)
     print("Data loaded")
 
     d_0, sigma_d = initDist(data, ra_c, de_c, plx_c)
-    print("Not corrected distance estimate: {:.1f} +/- {:.1f}".format(
-        d_0, sigma_d))
+    print("Cluster distance estimate (not corrected): "
+          + "{:.1f} +/- {:.1f}".format(d_0, sigma_d))
 
     print("Running emcee...")
     d_bayes = bayesInference(
